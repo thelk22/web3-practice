@@ -6,11 +6,20 @@ contract ownedContract {
     
     address private _owner;
 
-    constructor() {
+    constructor() { 
         _owner = msg.sender;  // Set owner to contract deployer
     }
 
-    function owner() public view returns(address) {
+    // Standard modifier which can be called for owner specific functionality.
+    modifier onlyOwner(){
+        require(msg.sender == _owner);  
+        _;
+    }
+
+    // Using the onlyOwner modifier.
+    // Only the owner of the contract can call this function.
+    // How can we call smart contracts outside of Remix to see if this works?
+    function owner() public view onlyOwner returns(address) {
         return _owner;
     }
 }
